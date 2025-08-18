@@ -1,0 +1,87 @@
+<?php
+include 'db_connect.php';
+
+// Fetch all books from DB
+$sql = "SELECT * FROM books";
+$result = $conn->query($sql);
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Haven - Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #f4f6f9; color: #333; }
+    header { background: linear-gradient(90deg,#FFD700,#4A90E2); color:#fff; padding:1rem; text-align:center; font-size:1.5rem; font-weight:600; }
+    
+    .container { padding: 20px; }
+    h2 { margin-bottom: 15px; }
+
+    /* Form */
+    .form-box { background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); margin-bottom:30px; }
+    .form-box input, .form-box textarea, .form-box select {
+      width:100%; padding:10px; margin-bottom:10px; border:1px solid #ccc; border-radius:6px; font-size:14px;
+    }
+    .form-box button {
+      background: linear-gradient(90deg,#FFD700,#4A90E2); border:none; padding:10px 20px;
+      border-radius:6px; color:#fff; font-size:15px; cursor:pointer; transition:0.3s;
+    }
+    .form-box button:hover { opacity:0.85; }
+
+    /* Table */
+    table { width:100%; border-collapse: collapse; background:#fff; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    th, td { padding:12px; border:1px solid #ddd; text-align:center; }
+    th { background:#4A90E2; color:#fff; }
+    tr:nth-child(even) { background:#f9f9f9; }
+
+    .action-btn { padding:6px 12px; border:none; border-radius:5px; cursor:pointer; font-size:13px; }
+    .edit { background:#28a745; color:#fff; }
+    .delete { background:#dc3545; color:#fff; }
+    .back {
+    display: block;
+    width: 150px;
+    text-align: center;
+    margin: 20px auto;
+    background: #6c757d;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    }
+    .back:hover {
+    background: #5a6268;
+    }
+  </style>
+</head>
+<body>
+
+<header>📚 Admin Dashboard - Book Haven</header>
+
+<div class="container">
+
+  <!-- Add Book Form -->
+  <div class="form-box">
+    <h2>Add New Book</h2>
+    <form action="insert_book.php" method="POST" enctype="multipart/form-data">
+      <input type="file" name="book_image" required>
+      <input type="text" name="book_name" placeholder="Book Name" required>
+      <input type="text" name="author" placeholder="Author" required>
+      <input type="text" name="publisher" placeholder="Publisher">
+      <input type="number" name="published_year" placeholder="Year">
+      <input type="text" name="genre" placeholder="Genre">
+      <input type="text" name="language" placeholder="Language">
+      <input type="number" name="num_pages" placeholder="Pages">
+      <input type="text" name="binding" placeholder="Binding (Hardcover/Paperback)">
+      <input type="number" name="price" placeholder="Price" required>
+      <textarea name="description" placeholder="Description"></textarea>
+      <button type="submit">➕ Add Book</button>
+      
+    </form>
+  </div>
+  <a href="admin_dashboard.php" class="back">⬅ Back to Dashboard</a>
+  </body>
+  </html>
+  
