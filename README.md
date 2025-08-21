@@ -1,0 +1,271 @@
+<!DOCTYPE html>    
+<html lang="en">    
+<head>    
+  <meta charset="UTF-8" />    
+  <meta name="viewport" content="width=device-width, initial-scale=1" />    
+  <title>BookWorld - Online Book Stall</title>    
+    
+  <!-- Google Fonts -->    
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />    
+    
+  <!-- AOS Animation -->    
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />    
+    
+  <style>    
+    * { margin: 0; padding: 0; box-sizing: border-box; }    
+    html, body {    
+      font-family: 'Poppins', sans-serif;    
+      background-color: #f5f8fc;    
+      overflow-x: hidden;    
+    }    
+    
+    /* Floating Admin Icon */    
+    .admin-icon {    
+      position: absolute;    
+      top: 20px;    
+      right: 20px;    
+      z-index: 999;    
+      display: flex;    
+      align-items: center;    
+      gap: 10px; /* space between icons */  
+    }    
+    .admin-icon img {    
+      width: 40px;    
+      height: 40px;    
+      border-radius: 50%;    
+      background: white;    
+      padding: 5px;    
+      transition: transform 0.3s ease;    
+      border: 2px solid #ffd700;    
+    }    
+    .admin-icon img:hover {    
+      transform: rotate(180deg);    
+      cursor: pointer;    
+    }    
+    
+    /* Header */    
+    header {    
+      background: linear-gradient(90deg, #ffd700, #1e3c72);    
+      padding: 1rem 2rem;    
+      color: white;    
+      position: relative;    
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);    
+    }    
+    .header-container {    
+      display: flex;    
+      align-items: center;    
+      justify-content: space-between;    
+    }    
+    .logo span {    
+      font-size: 2rem;    
+      font-weight: 600;    
+      animation: slideIn 1s ease-out forwards;    
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);    
+    }    
+    @keyframes slideIn {    
+      from { opacity: 0; transform: translateX(-50px); }    
+      to { opacity: 1; transform: translateX(0); }    
+    }    
+    
+    /* Banner Slideshow */    
+    .banner {    
+      width: 100%;    
+      height: 85vh;    
+      position: relative;    
+      overflow: hidden;    
+    }    
+    .slide {    
+      position: absolute;    
+      width: 100%;    
+      height: 100%;    
+      opacity: 0;    
+      transition: opacity 1.5s ease-in-out;    
+    }    
+    .slide img {    
+      width: 100%;    
+      height: 100%;    
+      object-fit: cover;    
+      animation: zoom 10s ease-in-out infinite;    
+      filter: brightness(0.8) contrast(1.05) saturate(1.2);    
+    }    
+    @keyframes zoom {    
+      0% { transform: scale(1.05); }    
+      50% { transform: scale(1.1); }    
+      100% { transform: scale(1.05); }    
+    }    
+    .slide.active { opacity: 1; }    
+    
+    /* Banner Overlay */    
+    .banner-overlay {    
+      position: absolute;    
+      top: 0; left: 0;    
+      width: 100%; height: 100%;    
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6));    
+      display: flex;    
+      flex-direction: column;    
+      align-items: center;    
+      justify-content: center;    
+      text-align: center;    
+      color: white;    
+      padding: 20px;    
+    }    
+    .banner-overlay h1 {    
+      font-size: 3rem;    
+      animation: fadeInDown 1s ease;    
+      color: #ffd700;    
+    }    
+    .banner-overlay p {    
+      font-size: 1.2rem;    
+      max-width: 600px;    
+      animation: fadeInUp 1.2s ease;    
+    }    
+    @keyframes fadeInDown {    
+      from { opacity: 0; transform: translateY(-20px); }    
+      to { opacity: 1; transform: translateY(0); }    
+    }    
+    @keyframes fadeInUp {    
+      from { opacity: 0; transform: translateY(20px); }    
+      to { opacity: 1; transform: translateY(0); }    
+    }    
+    
+    /* Categories */    
+    .categories {    
+      padding: 4rem 2rem;    
+      text-align: center;    
+    }    
+    .categories h2 {    
+      font-size: 2rem;    
+      margin-bottom: 2rem;    
+      color: #1e3c72;    
+    }    
+    .category-grid {    
+      display: grid;    
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));    
+      gap: 2rem;    
+    }    
+    .category-card {    
+      background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(30,60,114,0.3));    
+      backdrop-filter: blur(10px);    
+      border-radius: 12px;    
+      padding: 1.5rem;    
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);    
+      transition: transform 0.3s ease, box-shadow 0.3s ease;    
+      border: 1px solid rgba(255, 215, 0, 0.5);    
+    }    
+    .category-card:hover {    
+      transform: scale(1.05);    
+      box-shadow: 0 12px 30px rgba(255,215,0,0.5);    
+    }    
+    .category-card img {    
+      width: 100%;    
+      height: 180px;    
+      object-fit: cover;    
+      border-radius: 8px;    
+      margin-bottom: 1rem;    
+    }    
+    .category-card h3 { margin-bottom: 0.5rem; color: #1e3c72; font-weight: 600; }    
+    .category-card p { color: #333; }    
+    
+    /* Admin Contact Info */    
+    .admin-contact {    
+      background: #ffd700;    
+      color: #1e3c72;    
+      text-align: center;    
+      padding: 1.5rem;    
+      font-size: 1rem;    
+    }    
+    .admin-contact a {    
+      color: #1e3c72;    
+      text-decoration: none;    
+      font-weight: 600;    
+    }    
+    .admin-contact a:hover {    
+      text-decoration: underline;    
+    }    
+    
+    /* Footer */    
+    footer {    
+      background: linear-gradient(90deg, #1e3c72, #2a5298);    
+      color: white;    
+      text-align: center;    
+      padding: 1rem;    
+    }    
+  </style>    
+</head>    
+<body>    
+    
+  <!-- Floating Admin & Sign-In Icon -->    
+  <div class="admin-icon">    
+    <a href="#" title="Admin Settings">
+      <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png" alt="Admin" />
+    </a>
+    <a href="signin.php" title="Sign In">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Sign In" />
+    </a>
+  </div>    
+    
+  <!-- Header -->    
+  <header>    
+    <div class="header-container">    
+      <div class="logo"><span>BookWorld</span></div>    
+    </div>    
+  </header>    
+    
+  <!-- Banner Slider -->    
+  <section class="banner">    
+    <div class="slide active"><img src="https://via.placeholder.com/1500x800?text=Reading+Lights+the+Mind" alt="Slide 1"></div>    
+    <div class="slide"><img src="https://via.placeholder.com/1500x800?text=Knowledge+Is+Treasure" alt="Slide 2"></div>    
+    <div class="slide"><img src="https://via.placeholder.com/1500x800?text=Learn+Every+Day" alt="Slide 3"></div>    
+    
+    <div class="banner-overlay">    
+      <h1>Welcome to BookWorld</h1>    
+      <p>Where stories, knowledge, and imagination meet — Explore our Malayalam & English collections.</p>    
+    </div>    
+  </section>    
+    
+  <!-- Categories -->    
+  <section class="categories" id="books">    
+    <h2 data-aos="fade-up">Our Book Categories</h2>    
+    <div class="category-grid">    
+      <div class="category-card" data-aos="zoom-in">    
+        <img src="https://via.placeholder.com/400x250?text=Malayalam+Books" alt="Malayalam Books" />    
+        <h3>📚 Malayalam Books</h3>    
+        <p>Discover the timeless beauty of Malayalam literature.</p>    
+      </div>    
+      <div class="category-card" data-aos="zoom-in" data-aos-delay="100">    
+        <img src="https://via.placeholder.com/400x250?text=English+Books" alt="English Books" />    
+        <h3>📖 English Books</h3>    
+        <p>Dive into captivating English novels and informative reads.</p>    
+      </div>    
+    </div>    
+  </section>    
+    
+  <!-- Admin Contact Info -->    
+  <section class="admin-contact">    
+    <p><strong>📞 Contact:</strong> <a href="tel:+919876543210">+91 98765 43210</a> &nbsp; | &nbsp;    
+       <strong>📧 Email:</strong> <a href="mailto:admin@bookworld.com">admin@bookworld.com</a></p>    
+  </section>    
+    
+  <!-- Footer -->    
+  <footer>    
+    <p>&copy; 2025 BookWorld. All rights reserved.</p>    
+  </footer>    
+    
+  <!-- AOS Script -->    
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>    
+  <script>    
+    AOS.init({ duration: 800, once: true });    
+    
+    // Banner slider auto-play    
+    let slides = document.querySelectorAll(".slide");    
+    let index = 0;    
+    function showNextSlide() {    
+      slides[index].classList.remove("active");    
+      index = (index + 1) % slides.length;    
+      slides[index].classList.add("active");    
+    }    
+    setInterval(showNextSlide, 5000);    
+  </script>    
+    
+</body>    
+</html>
